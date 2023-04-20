@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content-wrapper">
+        <h1 class="mt-5">Welcome to the Friendly Task</h1>
+        <p class="lead">This web app is meant to help people who are struggling with executive function, by providing the tools and the community that can help and support at the same place.</p>
+        
+        <h2>About the Project</h2>
+        <p>Friendly Task is a web application designed to help users manage their daily tasks in a simple and efficient way. The project was created to provide an easy-to-use platform where users can add, edit, and complete tasks while also getting useful tips and advice from the community.
+            Particularly, I would like to point out r/ADHD as my inspiration, but with wider functionality.
+        </p>
+
+        <h3>Features Implemented:</h3>
+        <ul>
+            <li>User authentication: Users can register, log in, and log out of the application.</li>
+            <li>Task management: Users can add, edit, start, and complete tasks.</li>
+            <li>Time management: The application helps users to prevent overloading their day with tasks exceeding 8 hours.</li>
+            <li>Tips and advice: Users can share, comment on, and like tips from the community.</li>
+            <li>Profile settings: Users can customize their profile by changing their username, uploading a profile picture, and toggling between light and dark mode.</li>
+        </ul>
+
+        <h3>Planned Features for Future Implementation:</h3>
+        <ul>
+            <li>Calendar integration: Users will be able to view their tasks in a calendar format and sync with popular calendar applications.</li>
+            <li>Task reminders and notifications: Users will receive reminders and notifications for upcoming tasks and deadlines.</li>
+            <li>Tagging and categorizing tasks: Users will be able to organize tasks using tags and categories for more efficient management.</li>
+            <li>Search functionality: Users will be able to search for tasks and tips using keywords and filters.</li>
+            <li>Social features: Users will be able to follow others and view tasks and tips from their connections.</li>
+            <li>Reward system and shop: Users can already earn tokens by completing tasks and participating in the community. Tokens will be used to purchase gifts and items from the shop.</li>
+            <li>Presents and popularity: Users can send presents to other users, increasing the popularity of their tips. The more tokens spent on a tip, the higher its visibility in the community.</li>
+        </ul>
+
+        <h2>FAQs</h2>
+        <dl>
+            <dt>Q: How do I register for Friendly Task?</dt>
+            <dd>A: Visit the "Register" page, fill in the required information, and click the "Register" button.</dd>
+
+            <dt>Q: How do I add a new task?</dt>
+            <dd>A: Navigate to the "My Day" page and fill out the form with the task title and duration, then click "Add Task."</dd>
+
+            <dt>Q: Can I edit or delete a task?</dt>
+            <dd>A: Currently, you can only mark a task as started or completed. Editing and deleting tasks will be available in future updates.</dd>
+
+            <dt>Q: What is the maximum task duration allowed in a day?</dt>
+            <dd>A: You can't assign more then 8h of tasks a time, as it would not promote healthy productivity, but rather a toxic competition, which can't benefit anyone. </dd>
+
+            <dt>Q: How does the reward system work?</dt>
+            <dd>A: Users get the reward by completed the task that were set by them, however, we decided to postpone the introduction of the token economy, as for now the reward system has vulnerabilities </dd>
+
+            <dt>Q: SHOP??? Lootboxes??? Again?</dt>
+            <dd>A: No, there will be no monetization of my project, shop is more like a rank in CS:GO or Dota 2, the better you play the higher your rank. In our case it will not the ranks, but the things you will be able to buy and that will show up in your profile.</dd>
+    </dl>
+    
+    {% if current_user.is_authenticated %}
+        <p class="lead">You are logged in as {{ current_user.username }}.</p>
+    {% else %}
+        <p class="lead">Please login or register to get started.</p>
+    {% endif %}
+</div>
+{% endblock %}

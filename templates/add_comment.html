@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mt-5">Add Comment</h1>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.content.label(class='form-control-label') }}
+            {{ form.content(class='form-control', autofocus=True) }}
+        </div>
+        {{ form.submit(class='btn btn-primary', value='Submit Comment') }}
+    </form>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content-wrapper">
+        <h1 class="mt-5">My Day</h1>
+        <form method="post" class="task-form">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.title.label(class='form-control-label') }}
+                {{ form.title(class='form-control custom-input') }}
+            </div>
+            <div class="form-group">
+                {{ form.duration.label(class='form-control-label') }}
+                {{ form.duration(class='form-control custom-input', min=0) }}
+            </div>
+            {{ form.submit(class='btn btn-primary custom-button') }}
+        </form>
+
+        {% if planned_tasks or started_tasks or overdue_tasks %}
+            <h2 class="mt-5">Tasks for Today</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Planned Tasks</h3>
+                    <div id="planned-tasks">
+                        {% for task in planned_tasks %}
+                            <div class="task">
+                                <p>{{ task.title }} - {{ task.duration }} min</p>
+                                <form method="POST" action="{{ url_for('start_task', task_id=task.id) }}">
+                                    {{ form.csrf_token }}
+                                    <button type="submit" class="btn btn-sm btn-primary custom-button">Start</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h3>Started Tasks</h3>
+                    <div id="started-tasks">
+                        {% for task in started_tasks %}
+                            <div class="task">
+                                <p>{{ task.title }} - {{ task.duration }} min <span class="badge badge-warning">In Progress</span></p>
+                                <p>Time remaining: <span class="timer" data-duration="{{ task.duration }}" data-start-time="{{ task.start_time.isoformat() }}">-</span></p>
+                                <form method="POST" action="{{ url_for('complete_task', task_id=task.id) }}">
+                                    {{ form.csrf_token }}
+                                    <button type="submit" class="btn btn-sm btn-success custom-button">Complete</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h3>Overdue Tasks</h3>
+                    <div id="overdue-tasks">
+                        {% for task in overdue_tasks %}
+                            <div class="task">
+                                <p>{{ task.title }} - {{ task.duration }} min <span class="badge badge-danger">Overdue</span></p>
+                                <form method="POST" action="{{ url_for('start_task', task_id=task.id) }}">
+                                    {{ form.csrf_token }}
+                                    <button type="submit" class="btn btn-sm btn-primary custom-button">Restart</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+{% endblock %}

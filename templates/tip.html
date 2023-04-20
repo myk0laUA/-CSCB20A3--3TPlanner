@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="tip-container">
+        <h1 class="mt-5">{{ tip.content }}</h1>
+        <h6 class="mb-4 text-muted">Posted by {{ tip.user.username }} on {{ tip.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+
+        <div class="card tip-card">
+            <div class="card-body">
+                <p class="card-text">{{ tip.details }}</p>
+            </div>
+            <div class="card-footer">
+                {% if current_user.is_authenticated %}
+                    <form method="post" action="{{ url_for('like_tip', tip_id=tip.id) }}">
+                        {{ form.csrf_token }}
+                        {{ form.submit(class='btn btn-sm btn-primary') }}
+                    </form>
+                {% endif %}
+                <small class="float-right">{{ tip.likes.count() }} likes</small>
+            </div>
+        </div>
+
+        <h2 class="mt-5">Comments</h2>
+        {% if tip.comments %}
+            {% for comment in tip.comments %}
+                <div class="card comment-card mb-3">
+                    <div class="card-body">
+                        <p class="card-text">{{ comment.content }}</p>
+                        <small class="text-muted">Posted by {{ comment.user.username }} on {{ comment.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No comments yet.</p>
+        {% endif %}
+
+        {% if current_user.is_authenticated %}
+            <h2 class="mt-5">Add a Comment</h2>
+            <form method="post" action="{{ url_for('add_comment', tip_id=tip.id) }}" class="comment-form">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.content.label(class='form-control-label') }}
+                    {{ form.content(class='form-control') }}
+                </div>
+                {{ form.submit(class='btn btn-primary') }}
+            </form>
+        {% else %}
+            <p class="mt-5">Please login or register to add a comment.</p>
+        {% endif %}
+    </div>
+{% endblock %}
