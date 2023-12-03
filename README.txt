@@ -1,5 +1,4 @@
-Student: Mykola Zhuk id: 1007315512
-
+FriendlyTask is a time management web app with internet forum capabilities, the creation of which is inspired by r/ADHD.
 
 Technologies Used:
 
